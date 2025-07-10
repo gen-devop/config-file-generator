@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Configuración Huawei (Carrefour)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales para el cuerpo del documento - Adaptado a estilo desarrollador */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #1a1a2e; /* Fondo oscuro principal */
+            color: #e0e0e0; /* Texto claro */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinea al inicio para permitir scroll si es necesario */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            background-image: linear-gradient(to bottom right, #1a1a2e, #0f0f1d); /* Degradado sutil */
+        }
+        /* Estilos para el contenedor principal del formulario */
+        .container {
+            background-color: #2a2a4a; /* Contenedor más oscuro */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            max-width: 950px;
+            width: 100%;
+            margin: 20px auto; /* Margen superior e inferior para separación */
+            border: 1px solid #4a4a70;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estilos para los títulos principales y subtítulos */
+        h1, h2 {
+            font-family: 'Roboto Mono', monospace; /* Fuente monoespaciada */
+            color: #00ffcc; /* Verde neón vibrante */
+            border-bottom: 2px solid #4a4a70; /* Borde más sutil */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.5em; /* Título grande */
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
+            text-align: center; /* Centrar el título */
+        }
+
+        h3 {
+            color: #ffffff; /* Blanco para subtítulos de sección */
+            border-bottom: 1px solid #4a4a70;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        p {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1em;
+            color: #b0b0d0; /* Gris azulado */
+            text-align: left;
+        }
+
+        /* Estilos para cada grupo de formulario (label + input/textarea) */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        /* Estilos para las etiquetas de los campos del formulario */
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #00ffcc; /* Verde neón para etiquetas */
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95em;
+        }
+        /* Estilos para los campos de entrada de texto y número, y el área de texto */
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea,
+        .form-group select { /* También aplica a select */
+            width: calc(100% - 24px); /* Ajuste para padding y borde */
+            padding: 12px;
+            border: 1px solid #4a4a70; /* Borde oscuro */
+            border-radius: 6px;
+            font-size: 1em;
+            background-color: #1a1a2e; /* Fondo oscuro para inputs */
+            color: #e0e0e0; /* Texto claro en inputs */
+            font-family: 'Roboto Mono', monospace; /* Monospace para inputs */
+        }
+        /* Estilos para los campos cuando están en foco */
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus { /* También aplica a select */
+            border-color: #007bff; /* Azul vibrante al enfocar */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4);
+        }
+        /* Estilos para las descripciones de los campos */
+        .form-group .description {
+            font-size: 0.8em;
+            color: #8888a0; /* Gris más suave para descripciones */
+            margin-top: 5px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Estilos para radio buttons */
+        .radio-group label {
+            color: #e0e0e0; /* Color de texto claro para las etiquetas de radio */
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            display: inline-flex; /* Para alinear el radio con el texto */
+            align-items: center;
+            margin-right: 20px; /* Espacio entre opciones */
+        }
+
+        .radio-group input[type="radio"] {
+            width: auto; /* Deshacer el 100% width del input general */
+            margin-right: 8px;
+            background-color: #1a1a2e;
+            border: 1px solid #00ffcc; /* Borde neón */
+            appearance: none; /* Ocultar el estilo por defecto del navegador */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 18px; /* Tamaño personalizado */
+            height: 18px;
+            border-radius: 50%; /* Circular */
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .radio-group input[type="radio"]:checked {
+            background-color: #00ffcc; /* Relleno neón cuando seleccionado */
+            border-color: #00ffcc; /* Borde neón cuando seleccionado */
+            box-shadow: 0 0 5px rgba(0, 255, 204, 0.6); /* Pequeño brillo */
+        }
+
+        .radio-group input[type="radio"]:focus {
+            box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.4); /* Anillo de enfoque neón */
+        }
+
+        /* Estilos para tablas */
+        .table-container {
+            overflow-x-auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid #4a4a70;
+            background-color: #333355; /* Fondo oscuro para la tabla */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background-color: #4a4a70; /* Fondo de encabezado de tabla */
+            color: #e0e0e0;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #4a4a70;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+        }
+
+        table tbody tr:hover {
+            background-color: #3d3d6b; /* Ligeramente más claro al pasar el mouse */
+        }
+
+        table td input[type="text"],
+        table td select {
+            width: calc(100% - 16px); /* Ajuste para padding */
+            padding: 8px;
+            border: 1px solid #5a5a80; /* Borde de input en tabla */
+            border-radius: 4px;
+            background-color: #1a1a2e; /* Fondo oscuro de input en tabla */
+            color: #e0e0e0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        table td input[type="text"]:focus,
+        table td select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Estilos para el botón de generar script */
+        .generate-button {
+            background-color: #28a745; /* Verde para acción principal */
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+            font-family: 'Inter', sans-serif;
+            font-weight: bold;
+            width: 100%; /* Botón de ancho completo */
+        }
+        /* Estilos para el botón de generar script al pasar el ratón por encima */
+        .generate-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(40, 167, 69, 0.5);
+        }
+        /* Estilos para el área de texto donde se muestra el script generado */
+        #generatedConfig {
+            background-color: #1a1a2e; /* Fondo muy oscuro para el código */
+            border: 1px dashed #00ffcc; /* Borde punteado neón */
+            padding: 15px;
+            min-height: 400px; /* Un poco más grande */
+            font-family: 'Roboto Mono', monospace; /* Monospace para el código */
+            color: #00ffcc; /* Código en verde neón */
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-top: 30px;
+            resize: vertical;
+            border-radius: 6px;
+            box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.2); /* Sombra interna para el brillo */
+        }
+        /* Estilos para el botón de descargar script */
+        .download-button {
+            background-color: #007bff; /* Azul vibrante para descargar */
+            margin-left: 0; /* Elimina margen para apilar */
+            margin-top: 15px; /* Espacio si se apila */
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+            width: 100%;
+        }
+        /* Estilos para el botón de descargar script al pasar el ratón por encima */
+        .download-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.5);
+        }
+        /* Estilo para el texto rojo */
+        .red-text {
+            color: #ff6347; /* Un rojo más suave, tipo "tomato" */
+        }
+
+        /* Botón de volver */
+        .back-button {
+            background-color: #6c757d; /* Gris para volver */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            margin-top: 15px; /* Espacio para apilar */
+            width: 100%;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .form-actions {
+                display: flex;
+                gap: 15px;
+            }
+            .generate-button, .download-button, .back-button {
+                width: auto; /* Vuelve a ancho automático en desktop */
+                margin-left: 0; /* No hay margen izquierdo para el primero */
+                margin-top: 20px; /* Consistente con otros botones */
+            }
+            .download-button, .back-button {
+                margin-left: 10px; /* Espacio entre botones en desktop */
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px auto;
+            }
+            h1, h2 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+            h3 {
+                font-size: 1.3em;
+            }
+            .form-group label, .form-group .description {
+                font-size: 0.85em;
+            }
+            .form-group input, .form-group textarea, .form-group select {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+            table th, table td {
+                padding: 8px;
+                font-size: 0.85em;
+            }
+            table td input[type="text"], table td select {
+                padding: 6px;
+                font-size: 0.8em;
+            }
+            #generatedConfig {
+                min-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Configuración <span class="red-text">Carrefour</span></h1>
+        <p>Por favor, complete los siguientes campos para generar el script de configuración de su dispositivo Huawei para Carrefour.</p>
+
+        <!-- Switch Type Selection -->
+        <div class="mb-4">
+            <h3 class="text-xl font-semibold mb-4">Seleccionar Tipo de Switch</h3>
+            <div class="flex flex-wrap gap-6 radio-group">
+                <label>
+                    <input type="radio" name="switchType" value="BB-ROUTE-01">
+                    <span>BB-ROUTE-01</span>
+                </label>
+                <label>
+                    <input type="radio" name="switchType" value="BB-ROUTE-02">
+                    <span>BB-ROUTE-02</span>
+                </label>
+                <label>
+                    <input type="radio" name="switchType" value="SWBB">
+                    <span>SWBB</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Nro de Switch and Rack Name Inputs -->
+        <div class="mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
+            <div class="flex flex-col flex-1 form-group">
+                <label for="nroSwitch">Nro de Switch:</label>
+                <input type="text" id="nroSwitch" name="nroSwitch" placeholder="Ej: 01">
+            </div>
+            <div class="flex flex-col flex-1 form-group">
+                <label for="rackName">Nombre del Rack:</label>
+                <input type="text" id="rackName" name="rackName" placeholder="Ej: R1">
+            </div>
+        </div>
+
+        <!-- General Parameters Section -->
+        <div class="mb-8">
+            <h3 class="text-2xl font-semibold mb-6">
+                Parámetros Generales
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="flex flex-col form-group">
+                    <label for="storeNumber">Número de la Tienda:</label>
+                    <input type="text" id="storeNumber" name="storeNumber" placeholder="Ej: 701">
+                </div>
+                <div class="flex flex-col form-group">
+                    <label for="storeName">Nombre de la Tienda:</label>
+                    <input type="text" id="storeName" name="storeName" placeholder="Ej: ATACADAO">
+                </div>
+                <div class="flex flex-col form-group">
+                    <label for="hostname">Hostname:</label>
+                    <input type="text" id="hostname" name="hostname" placeholder="Hostname generado automáticamente" readonly>
+                </div>
+                <div class="flex flex-col form-group">
+                    <label for="veloGatewayIpAddress">Ruta Estática:</label>
+                    <input type="text" id="veloGatewayIpAddress" name="veloGatewayIpAddress" placeholder="Ej: 10.94.23.245">
+                </div>
+            </div>
+        </div>
+
+        <!-- VLAN IP Assignment Section -->
+        <div class="mb-8">
+            <h3 class="text-2xl font-semibold mb-6">
+                Asignación de IPs (VLANs)
+            </h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>VLAN</th>
+                            <th>IP de VLAN</th>
+                            <th>IP VRRP</th>
+                            <th>MASK (CIDR)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vlan-table-body">
+                        <!-- VLAN rows will be generated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Port Assignment Section -->
+        <div class="mb-8">
+            <h3 class="text-2xl font-semibold mb-6">
+                Asignación de Puertos
+            </h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Puerto</th>
+                            <th>Descripción</th>
+                            <th>Vlan</th>
+                            <th>Tipo de Puerto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="port-table-body">
+                        <!-- Port rows will be generated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Generated Configuration Section -->
+        <div class="flex flex-col">
+            <div class="form-actions">
+                <button type="button" id="generateConfigBtnBottom" class="generate-button">
+                    Generar Configuración
+                </button>
+                <button type="button" id="downloadConfigBtn" class="download-button">
+                    Descargar Configuración (.cfg)
+                </button>
+                <button type="button" onclick="window.location.href = 'index.html';" class="back-button">Volver</button>
+            </div>
+            
+            <div id="generatedConfigSection" class="hidden">
+                <h2 class="text-2xl font-semibold mt-8 mb-6">
+                    Configuración Generada
+                </h2>
+                <textarea id="generatedConfig" rows="30" cols="100" readonly placeholder="Presione 'Generar Configuración' para ver el script."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to convert CIDR mask to dotted decimal format
+        const cidrToDottedDecimal = (cidr) => {
+            if (!cidr || isNaN(cidr) || cidr < 0 || cidr > 32) {
+                return '';
+            }
+            let mask = [];
+            for (let i = 0; i < 4; i++) {
+                let octet = Math.min(cidr, 8);
+                mask.push(256 - (1 << (8 - octet)));
+                cidr -= octet;
+            }
+            return mask.join('.');
+        };
+
+        // Global state object
+        let params = {
+            storeNumber: '',
+            storeName: '',
+            veloGatewayIpAddress: '',
+            nroSwitch: '',
+            rackName: '',
+            hostname: '',
+
+            // VLAN IP Assignment - todos los valores iniciales son cadenas vacías para los marcadores de posición
+            vlan1IpAddress: '', vlan1VrrpIp: '', vlan1Mask: '24', // Default to 24
+            vlan10IpAddress: '', vlan10VrrpIp: '', vlan10Mask: '24', // Default to 24
+            vlan20IpAddress: '', vlan20VrrpIp: '', vlan20Mask: '24', // Default to 24
+            vlan30IpAddress: '', vlan30VrrpIp: '', vlan30Mask: '24', // Default to 24
+            vlan40IpAddress: '', vlan40VrrpIp: '', vlan40Mask: '24', // Default to 24
+            vlan50IpAddress: '', vlan50VrrpIp: '', vlan50Mask: '24', // Default to 24
+            vlan51IpAddress: '', vlan51VrrpIp: '', vlan51Mask: '24', // Default to 24
+            vlan60IpAddress: '', vlan60VrrpIp: '', vlan60Mask: '24', // Default to 24
+            vlan52IpAddress: '', vlan52VrrpIp: '', vlan52Mask: '24', // VLANs ocultas que no se muestran en la UI pero pueden existir en el template - Default to 24
+            vlan750IpAddress: '', vlan750VrrpIp: '', vlan750Mask: '24', // VLANs ocultas - Default to 24
+
+            // Port Assignments - Default values as requested
+            ...Array.from({ length: 28 }, (_, i) => {
+                const portNum = i + 1;
+                if (portNum >= 1 && portNum <= 19) {
+                    return {
+                        [`gi0_0_${portNum}Description`]: 'Libre',
+                        [`gi0_0_${portNum}Vlan`]: '10',
+                        [`gi0_0_${portNum}IsTrunk`]: 'NO', // Access
+                    };
+                } else if (portNum >= 20 && portNum <= 28) {
+                    return {
+                        [`gi0_0_${portNum}Description`]: 'Libre',
+                        [`gi0_0_${portNum}Vlan`]: '', // Leave empty for trunk, as default trunk allows all
+                        [`gi0_0_${portNum}IsTrunk`]: 'SI', // Trunk
+                    };
+                }
+                return {}; // Should not happen with current length
+            }).reduce((acc, curr) => ({ ...acc, ...curr }), {}),
+        };
+
+        let selectedSwitchType = '';
+
+        const vlansInUi = [1, 10, 20, 30, 40, 50, 51, 60];
+        const allPossibleVlans = [1, 10, 20, 30, 40, 50, 51, 52, 60, 750];
+        const ports = Array.from({ length: 28 }, (_, i) => i + 1);
+
+        // Function to update the hostname parameter and its display field
+        function updateHostnameField() {
+            let newHostname = '';
+            const currentStoreNumber = params.storeNumber;
+            const currentNroSwitch = params.nroSwitch;
+            const currentRackName = params.rackName;
+
+            if (selectedSwitchType && currentStoreNumber && currentNroSwitch && currentRackName) {
+                if (selectedSwitchType.startsWith('BB-ROUTE')) {
+                    newHostname = `BBROUTE-${currentStoreNumber}-${currentNroSwitch}-${currentRackName}`;
+                } else if (selectedSwitchType === 'SWBB') {
+                    newHostname = `SWBB-${currentStoreNumber}-${currentNroSwitch}-${currentRackName}`;
+                }
+            }
+            params.hostname = newHostname;
+            document.getElementById('hostname').value = newHostname; // Update the display field directly
+            let hostnamePlaceholder = "Hostname generado automáticamente";
+            if (selectedSwitchType.startsWith('BB-ROUTE')) {
+                 hostnamePlaceholder = "Ej: BBROUTE-NRO DE TIENDA-NRO DE SWITCH-NRO DE RACK";
+            } else if (selectedSwitchType === 'SWBB') {
+                 hostnamePlaceholder = "Ej: SWBB-NRO DE TIENDA-NRO DE SWITCH-NRO DE RACK";
+            }
+            document.getElementById('hostname').placeholder = hostnamePlaceholder;
+        }
+
+        // Central function to update all UI elements and generate configuration
+        // This function should ONLY be called on initial load, switch type change, or button click.
+        function updateUI() {
+            // Update hostname parameter and its display field
+            updateHostnameField();
+
+            // Repopulate tables based on the latest params (this will cause re-render)
+            populateVlanTable();
+            populatePortTable();
+
+            // Generate the final configuration
+            document.getElementById('generatedConfig').value = generateConfig();
+        }
+
+        // Functions to generate the configuration string based on user input (no external templates)
+        function generateConfig() {
+            let config = "";
+
+            if (!selectedSwitchType) {
+                return "Seleccione un tipo de Switch para generar la configuración.";
+            }
+
+            const currentHostname = params.hostname;
+            const currentVeloGatewayIpAddress = params.veloGatewayIpAddress;
+            const currentStoreNumber = params.storeNumber;
+            const currentStoreName = params.storeName;
+
+            // Define complex string literals with proper escaping
+            const snmpCommunityReadCipher = `snmp-agent community read cipher %@%##!!!!!!!!!"!!!!#!!!!*!!!!7LTnVOK_g:\`cuDG=0}$4w!Um$eO^EXYbW\\I!!!!!2jp5!!!!!!U!!!!)>StWE!u/J&Jq5Jnha'9HJ$Q/z""$,dY6F!V)@y&b:nz<o6o$XXF)n/cDO%S%_5=W!!!!!!!!!!!!!!!%@%# alias __CommunityAliasName_01_39617`;
+            const snmpTargetHostCipher = `snmp-agent target-host host-name __targetHost_1_37345 trap address udp-domain 10.210.218.3 params securityname cipher %+%##!!!!!!!!!"!!!!#!!!!*!!!!7LTnVOK_g:lFh-\`<t>\`B**If/#<\\2J5\`p!H!!!!!2jp5!!!!!!E!!!!XlFQE@{X{3F4PO15"#iC9U43+@768BqOr[(0J&K4penC!!!!!!!!!!!!!!!!%+%#`;
+            const comunicacionesPassword = `local-user comunicaciones password irreversible-cipher pwd-Carre4`;
+
+            // --- Inicio del Nuevo Orden de Configuración (Fiel al TEMPLATE.txt) ---
+
+            config += `#\n`;
+            config += `pki realm default\n`;
+            config += `#\n`;
+            config += `clock timezone Argentina minus 03:00:00\n`;
+            config += `#\n`;
+            config += `sysname ${currentHostname}\n`;
+            config += `#\n`;
+
+            // DHCP configuration is conditional
+            if (selectedSwitchType !== 'SWBB') {
+                config += `dhcp enable\n`;
+                config += `#\n`;
+                config += `dhcp relay server group WLCDHCP\n`;
+                config += ` server 10.210.133.87 2\n`;
+                config += ` server 10.210.133.88 1\n`;
+                config += ` server 10.210.133.89 0\n`;
+                config += `#\n`;
+                config += `dhcp relay server group dhcpCarrefour\n`;
+                config += ` server 10.94.164.22 0\n`;
+                config += ` server 10.94.184.20 1\n`;
+                config += `#\n`;
+            }
+
+
+            config += `undo ftp server source all-interface\n`;
+            config += `undo ftp ipv6 server source all-interface\n`;
+            config += `#\n`;
+            config += `ssl policy default\n`;
+            config += ` pki-domain default\n`;
+            config += ` ssl minimum version tls1.2\n`;
+            config += ` cipher-suite exclude key-exchange rsa\n`;
+            config += ` cipher-suite exclude cipher mode cbc\n`;
+            config += ` cipher-suite exclude hmac sha1\n`;
+            config += ` diffie-hellman modulus 3072\n`;
+            config += ` ecdh group curve brainpool\n`;
+            config += ` signature algorithm-list ed25519 ed448 rsa-pss-pss-sha256 rsa-pss-pss-sha384 rsa-pss-pss-sha512 rsa-pss-rsae-sha256 rsa-pss-rsae-sha384 rsa-pss-rsae-sha512\n`;
+            config += `#\n`;
+            config += `info-center logfile compression lzma\n`;
+            config += `#\n`;
+            config += `device board 1 board-type S5735-L24P4S-A-V2\n`;
+            config += `#\n`;
+            config += `authentication-profile name default_authen_profile\n`;
+            config += `authentication-profile name dot1x_authen_profile\n`;
+            config += `authentication-profile name dot1xmac_authen_profile\n`;
+            config += `authentication-profile name mac_authen_profile\n`;
+            config += `#\n`;
+            config += `drop-profile default\n`;
+            config += `#\n`;
+            config += `ntp ipv6 server disable\n`;
+            config += `y\n`;
+            config += `ntp server source-interface all disable\n`;
+            config += `ntp ipv6 server source-interface all disable\n`;
+            config += `undo ntp server disable\n`;
+            config += `ntp unicast-peer 10.94.167.191\n`;
+            config += `ntp unicast-peer 10.94.184.191\n`;
+            config += `#\n`;
+            config += `vlan batch 10 20 30 40 50 to 51 52 60 750\n`;
+            config += `#\n`;
+            config += `stp mode rstp\n`;
+            if (selectedSwitchType === 'BB-ROUTE-01') {
+                config += `stp instance 0 root primary\n`;
+            } else if (selectedSwitchType === 'BB-ROUTE-02') {
+                config += `stp instance 0 root secondary\n`;
+            }
+            config += `#\n`;
+            config += `error-down auto-recovery cause link-flap interval 60\n`;
+            config += `#\n`;
+            config += `undo telnet server-source all-interface\n`;
+            config += `undo telnet ipv6 server-source all-interface\n`;
+            config += `#\n`;
+            config += `qos schedule-profile default\n`;
+            config += `#\n`;
+            config += `diffserv domain default\n`;
+            config += `#\n`;
+            config += `ip vpn-instance _management_vpn_\n`;
+            config += ` ipv4-family\n`;
+            config += `#\n`;
+            config += `vlan 1\n name MGT\n`;
+            config += `#\n`;
+            config += `vlan 10\n name BackOffice\n`;
+            config += `#\n`;
+            config += `vlan 20\n name FrontOffice\n`;
+            config += `#\n`;
+            config += `vlan 30\n name Sale_Area_CCTV\n`;
+            config += `#\n`;
+            config += `vlan 40\n name Services_BACKUP\n`;
+            config += `#\n`;
+            config += `vlan 51\n name Local_WIFI_Devices2\n`;
+            config += `#\n`;
+            config += `vlan 52\n name Working_WIFI\n`;
+            config += `#\n`;
+            config += `vlan 60\n name Global_WIFI_Devices_VLAN90AES\n`;
+            config += `#\n`;
+            config += `vlan 750\n name Social_WIFI\n`;
+            config += `#\n`;
+
+            config += `aaa\n`;
+            config += ` authentication-scheme default\n`;
+            config += `  authentication-mode local\n`;
+            config += ` authentication-scheme radius\n`;
+            config += `  authentication-mode radius\n`;
+            config += ` authorization-scheme default\n`;
+            config += `  authorization-mode local\n`;
+            config += ` accounting-scheme default\n`;
+            config += `  accounting-mode none\n`;
+            config += ` local-aaa-user password policy administrator\n`;
+            config += `  password history record number 0\n`;
+            config += `  undo password alert original\n`;
+            config += `  password expire 0\n`;
+            config += ` domain default\n`;
+            config += `  authentication-scheme default\n`;
+            config += `  accounting-scheme default\n`;
+            config += ` domain default_admin\n`;
+            config += `  authentication-scheme default\n`;
+            config += `  accounting-scheme default\n`;
+            config += `${comunicacionesPassword}\n`;
+            config += ` local-user comunicaciones privilege level 3\n`;
+            config += ` local-user comunicaciones service-type terminal ssh\n`;
+            config += `Y\n`;
+            config += `#\n`;
+            config += `free-rule-template name default_free_rule\n`;
+            config += `#\n`;
+            config += `dot1x-access-profile name dot1x_access_profile\n`;
+            config += `#\n`;
+            config += `mac-access-profile name mac_access_profile\n`;
+            config += `#\n`;
+            config += `remote-unit\n`;
+            config += `#\n`;
+            config += `stack\n`;
+            config += `#\n`;
+            config += `license\n`;
+            config += `#\n`;
+            config += `warranty\n`;
+            config += `#\n`;
+
+            // Interfaces Vlanif
+            allPossibleVlans.forEach(vlanId => {
+                const isVlanDisabledForSWBB = selectedSwitchType === 'SWBB' && vlanId >= 10;
+                const isVlan1VrrpDisabledForSWBB = selectedSwitchType === 'SWBB' && vlanId === 1;
+
+                if (isVlanDisabledForSWBB) {
+                    return;
+                }
+
+                const userIpAddress = params[`vlan${vlanId}IpAddress`];
+                const userVrrpIp = params[`vlan${vlanId}VrrpIp`];
+                const userMaskCidr = params[`vlan${vlanId}Mask`];
+                const userDottedDecimalMask = cidrToDottedDecimal(userMaskCidr);
+
+                if (userIpAddress && userDottedDecimalMask) {
+                    config += `interface Vlanif${vlanId}\n`;
+                    let description = '';
+                    switch (vlanId) {
+                        case 1: description = ` description MGT`; break;
+                        case 10: description = ` description VLAN BackOffice`; break;
+                        case 20: description = ` description FrontOffice`; break;
+                        case 30: description = ` description CCTV`; break;
+                        case 40: description = ` description VLAN BKP`; break;
+                        case 50: description = ` description WIFI INTERNA WPA2`; break;
+                        case 51: description = ` description WIFI INTERNA WEP`; break;
+                        case 52: description = ` description Working_WIFI`; break;
+                        case 60: description = ` description WIFI INTERNA WLAN90AES`; break;
+                        case 750: description = ` description Social_WIFI`; break;
+                        default: description = ` description VLAN_${vlanId}`; break;
+                    }
+                    config += description + `\n`;
+                    config += ` ip address ${userIpAddress} ${userDottedDecimalMask}\n`;
+                    if (!isVlan1VrrpDisabledForSWBB && userVrrpIp && selectedSwitchType !== 'SWBB') {
+                        config += ` vrrp vrid ${vlanId} virtual-ip ${userVrrpIp}\n`;
+                        if (selectedSwitchType === 'BB-ROUTE-01') {
+                            config += ` vrrp vrid ${vlanId} priority 200\n`;
+                        }
+                    }
+                    if (selectedSwitchType !== 'SWBB') {
+                        if (vlanId === 1) {
+                            config += ` dhcp select relay\n`;
+                            config += ` dhcp relay server-group WLCDHCP\n`;
+                            config += ` dhcp relay gateway-switch enable\n`;
+                        } else if ([10, 40, 60].includes(vlanId)) {
+                            config += ` dhcp select relay\n`;
+                            config += ` dhcp relay server-group dhcpCarrefour\n`;
+                            config += ` dhcp relay gateway-switch enable\n`;
+                        } else if (vlanId === 20) {
+                            config += ` dhcp relay server-group dhcpCarrefour\n`;
+                            config += ` dhcp relay gateway-switch enable\n`;
+                        }
+                    }
+                    config += `#\n`;
+                }
+            });
+
+            // Eth-Trunk
+            if (selectedSwitchType.startsWith('BB-ROUTE')) {
+                config += `interface Eth-Trunk1\n`;
+                config += ` description Conexion entre BBROUTES\n`;
+                config += ` port link-type trunk\n`;
+                config += ` port trunk allow-pass vlan 2 to 4094\n`;
+                config += ` mode lacp-dynamic\n`;
+                config += `#\n`;
+            }
+
+            // Interfaces GE1/0/x
+            ports.forEach(portNum => {
+                const userDescription = params[`gi0_0_${portNum}Description`];
+                const userVlan = params[`gi0_0_${portNum}Vlan`];
+                const userIsTrunk = params[`gi0_0_${portNum}IsTrunk`];
+
+                config += `interface GE1/0/${portNum}\n`;
+
+                if ((selectedSwitchType.startsWith('BB-ROUTE')) && (portNum === 1 || portNum === 2)) {
+                    config += ` description Conexion entre BBROUTES\n`;
+                    config += ` eth-trunk 1\n`;
+                } else {
+                    if (userDescription && userDescription !== 'Libre') {
+                        config += ` description ${userDescription}\n`;
+                    } else {
+                        if (selectedSwitchType === 'BB-ROUTE-01' || selectedSwitchType === 'BB-ROUTE-02') {
+                            if (portNum === 4) {
+                                config += ` description CAJA\n`;
+                            } else if (portNum >= 25 && portNum <= 28) {
+                                config += ` description TRONCAL\n`;
+                            } else {
+                                config += ` description Libre\n`;
+                            }
+                        } else if (selectedSwitchType === 'SWBB') {
+                            if (portNum === 1 || portNum === 2 || (portNum >= 25 && portNum <= 28)) {
+                                config += ` description Libre\n`;
+                            } else if (portNum >= 3 && portNum <= 8) {
+                                config += ` description CAJA\n`;
+                            } else if (portNum === 9) {
+                                config += ` description SIN DESCRIPCION\n`;
+                            } else if (portNum === 10 || portNum === 13 || portNum === 14) {
+                                config += ` description IMPRESORA\n`;
+                            } else if (portNum === 11) {
+                                config += ` description DVR\n`;
+                            } else if (portNum === 12) {
+                                config += ` description PC\n`;
+                            } else if (portNum === 24) {
+                                config += ` description SWBB-123-2-R2\n`;
+                            } else {
+                                config += ` description Libre\n`;
+                            }
+                        } else {
+                            config += ` description Libre\n`;
+                        }
+                    }
+
+                    if (userIsTrunk === 'SI') {
+                        config += ` port link-type trunk\n`;
+                        if (userVlan && userVlan !== 'X' && userVlan !== '2 to 4094') {
+                            config += ` port trunk allow-pass vlan ${userVlan}\n`;
+                        } else {
+                            config += ` port trunk allow-pass vlan 2 to 4094\n`;
+                        }
+                    } else {
+                        config += ` port link-type access\n`;
+                        if (userVlan) {
+                            config += ` port default vlan ${userVlan}\n`;
+                        } else {
+                            if (selectedSwitchType === 'BB-ROUTE-01' || selectedSwitchType === 'BB-ROUTE-02') {
+                                if (portNum === 4) config += ` port default vlan 20\n`;
+                                else config += ` port default vlan 10\n`;
+                            } else if (selectedSwitchType === 'SWBB') {
+                                if (portNum >= 3 && portNum <= 5) config += ` port default vlan 20\n`;
+                                else if (portNum === 9 || portNum === 10 || portNum === 11 || portNum === 13 || portNum === 14) { /* Vacío para puertos SWBB sin VLAN por defecto */ }
+                                else if (portNum === 24) config += ` port default vlan 10\n`;
+                                else config += ` port default vlan 10\n`;
+                            } else {
+                                config += ` port default vlan 1\n`;
+                            }
+                        }
+                    }
+                }
+
+                if (userVlan === '20') {
+                    config += ` stp edged-port enable\n`;
+                }
+
+                config += `#\n`;
+            });
+
+            config += `interface NULL0\n`;
+            config += `#\n`;
+
+            if (currentVeloGatewayIpAddress) {
+                config += `ip route-static 0.0.0.0 0.0.0.0 ${currentVeloGatewayIpAddress}\n`;
+            }
+            config += `#\n`;
+
+            config += `snmp-agent\n`;
+            config += `snmp-agent local-engineid 800007DB03E48326892F30\n`;
+            config += `Y\n`;
+            config += `${snmpCommunityReadCipher}\n`;
+            config += `#\n`;
+            config += `snmp-agent sys-info version v2c v3\n`;
+            config += `${snmpTargetHostCipher}\n`;
+            config += `#\n`;
+            config += `snmp-agent mib-view included isoview01 system\n`;
+            config += `snmp-agent mib-view included isoview02 interfaces\n`;
+            config += `#\n`;
+            config += `snmp-agent protocol source-status all-interface\n`;
+            config += `undo snmp-agent protocol source-status ipv6 all-interface\n`;
+            config += `#\n`;
+            config += `undo snmp-agent proxy protocol source-status all-interface\n`;
+            config += `undo snmp-agent proxy protocol source-status ipv6 all-interface\n`;
+            config += `#\n`;
+            config += `snmp-agent trap enable\n`;
+            config += `#\n`;
+
+            config += `stelnet server enable\n`;
+            config += `sftp server enable\n`;
+            config += `ssh server rsa-key min-length 3072\n`;
+            config += `ssh user admin\n`;
+            config += `ssh user admin authentication-type password\n`;
+            config += `ssh user admin service-type all\n`;
+            config += `ssh user admin sftp-directory flash:\n`;
+            config += `ssh user comunicaciones\n`;
+            config += `ssh user comunicaciones authentication-type password\n`;
+            config += `ssh user comunicaciones service-type all\n`;
+            config += `ssh user comunicaciones sftp-directory flash:\n`;
+            config += `ssh server-source all-interface\n`;
+            config += `y\n`;
+            config += `undo ssh ipv6 server-source all-interface\n`;
+            config += `ssh authorization-type default aaa\n`;
+            config += `#\n`;
+            config += `ssh server cipher aes256_gcm aes128_gcm aes256_ctr aes192_ctr aes128_ctr\n`;
+            config += `ssh server hmac sha2_512 sha2_256\n`;
+            config += `ssh server key-exchange dh_group_exchange_sha256 dh_group16_sha512 curve25519_sha256\n`;
+            config += `#\n`;
+            config += `ssh server publickey rsa_sha2_512 rsa_sha2_256\n`;
+            config += `#\n`;
+            config += `ssh server dh-exchange min-len 3072\n`;
+            config += `#\n`;
+            config += `ssh client first-time enable\n`;
+            config += `#\n`;
+            config += `ssh client publickey rsa_sha2_512 rsa_sha2_256\n`;
+            config += `#\n`;
+            config += `ssh client cipher aes256_gcm aes128_gcm aes256_ctr aes192_ctr aes128_ctr\n`;
+            config += `ssh client hmac sha2_512 sha2_256\n`;
+            config += `ssh client key-exchange dh_group_exchange_sha256 dh_group16_sha512 curve25519_sha256\n`;
+            config += `#\n`;
+
+            config += `user-interface maximum-vty 5\n`;
+            config += `user-interface vty available-vty-threshold 20\n`;
+            config += `#\n`;
+            config += `user-interface con 0\n`;
+            config += ` authentication-mode aaa\n`;
+            config += `#\n`;
+            config += `user-interface vty 0 4\n`;
+            config += ` authentication-mode aaa\n`;
+            config += ` user privilege level 3\n`;
+            config += ` protocol inbound ssh\n`;
+            config += `#\n`;
+
+            config += `ztp domain-type registration-center domain register.naas.huawei.com port 10020\n`;
+            config += `#\n`;
+            config += `web-manager enable port 8443\n`;
+            config += `web-manager http forward enable\n`;
+            config += `#\n`;
+            config += `header shell information  'Carrefour Argentina - Telecomunicaciones GX ${currentStoreNumber} - ${currentStoreName}'\n`;
+            config += `#\n`;
+            config += `header login information  'Carrefour Argentina - Telecomunicaciones GX ${currentStoreNumber} - ${currentStoreName}'\n`;
+            config += `#\n`;
+            config += `rsa local-key-pair create\n`;
+            config += `y\n`;
+                config += `2048\n`;
+            config += `#\n`;
+
+            config += `return\n`;
+            return config;
+        }
+
+        // Functions to populate the VLAN and Port tables
+        function populateVlanTable() {
+            const vlanTableBody = document.getElementById('vlan-table-body');
+            vlanTableBody.innerHTML = ''; // Clear existing rows
+
+            vlansInUi.forEach(vlanId => {
+                const isVlanDisabledForSWBB = selectedSwitchType === 'SWBB' && vlanId >= 10;
+                const isVlan1VrrpDisabledForSWBB = selectedSwitchType === 'SWBB' && vlanId === 1;
+
+                const row = vlanTableBody.insertRow();
+                row.className = 'hover:bg-gray-100 transition-colors duration-150 ease-in-out';
+                row.innerHTML = `
+                    <td class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900">${vlanId}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                        <input type="text" name="vlan${vlanId}IpAddress" class="w-full p-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-400" placeholder="Ej: 192.168.${vlanId}.1" value="${params[`vlan${vlanId}IpAddress`]}" ${isVlanDisabledForSWBB ? 'disabled' : ''}>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                        <input type="text" name="vlan${vlanId}VrrpIp" class="w-full p-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-400" placeholder="Ej: 192.168.${vlanId}.254" value="${params[`vlan${vlanId}VrrpIp`]}" ${isVlanDisabledForSWBB || isVlan1VrrpDisabledForSWBB ? 'disabled' : ''}>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                        <input type="text" name="vlan${vlanId}Mask" class="w-full p-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-400" placeholder="Ej: 24" value="${params[`vlan${vlanId}Mask`]}" ${isVlanDisabledForSWBB ? 'disabled' : ''}>
+                    </td>
+                `;
+            });
+        }
+
+        function populatePortTable() {
+            const portTableBody = document.getElementById('port-table-body');
+            portTableBody.innerHTML = ''; // Clear existing rows
+
+            ports.forEach(portNum => {
+                const isForcedTrunkPort = (selectedSwitchType.startsWith('BB-ROUTE') && (portNum === 1 || portNum === 2));
+                const isTrunkInitial = isForcedTrunkPort ? 'SI' : params[`gi0_0_${portNum}IsTrunk`];
+                const isVlanInputDisabled = isTrunkInitial === 'SI';
+
+                const row = portTableBody.insertRow();
+                row.className = 'hover:bg-gray-100 transition-colors duration-150 ease-in-out';
+                row.innerHTML = `
+                    <td class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900">GE1/0/${portNum}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                        <input type="text" id="gi0_0_${portNum}Description" name="gi0_0_${portNum}Description" class="w-full p-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-400" placeholder="Ej: CAMARA ${portNum}" value="${params[`gi0_0_${portNum}Description`]}" ${isForcedTrunkPort ? 'disabled' : ''}>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                        <input type="text" id="gi0_0_${portNum}Vlan" name="gi0_0_${portNum}Vlan" class="w-full p-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-400" placeholder="Ej: 30" value="${params[`gi0_0_${portNum}Vlan`]}" ${isVlanInputDisabled ? 'disabled' : ''}>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                        <select id="gi0_0_${portNum}IsTrunk" name="gi0_0_${portNum}IsTrunk" class="w-full p-1 border border-gray-300 rounded-md text-sm focus:ring-1 focus:ring-blue-400" ${isForcedTrunkPort ? 'disabled' : ''}>
+                            <option value="NO" ${isTrunkInitial === 'NO' ? 'selected' : ''}>Access</option>
+                            <option value="SI" ${isTrunkInitial === 'SI' ? 'selected' : ''}>Trunk</option>
+                        </select>
+                    </td>
+                `;
+
+                // Add event listener to the select element to toggle VLAN input disabled state
+                const trunkSelect = document.getElementById(`gi0_0_${portNum}IsTrunk`);
+                const vlanInput = document.getElementById(`gi0_0_${portNum}Vlan`);
+
+                if (!isForcedTrunkPort) {
+                    trunkSelect.addEventListener('change', (event) => {
+                        params[event.target.id] = event.target.value; // Update param directly
+                        if (event.target.value === 'SI') {
+                            vlanInput.disabled = true;
+                            vlanInput.value = '';
+                            params[`gi0_0_${portNum}Vlan`] = '';
+                        } else {
+                            vlanInput.disabled = false;
+                        }
+                    });
+                } else {
+                    params[`gi0_0_${portNum}IsTrunk`] = 'SI';
+                    params[`gi0_0_${portNum}Vlan`] = '';
+                }
+            });
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial render of the UI (hostname will be updated, tables populated, but config hidden)
+            updateHostnameField(); // Only update hostname on load
+            populateVlanTable();
+            populatePortTable();
+
+            // Hide the config section initially
+            document.getElementById('generatedConfigSection').classList.add('hidden');
+
+            // General inputs: Directly update params on input.
+            // Call updateHostnameField if it's a hostname-related input.
+            ['nroSwitch', 'rackName', 'storeNumber', 'storeName', 'veloGatewayIpAddress'].forEach(id => {
+                document.getElementById(id).addEventListener('input', (event) => {
+                    params[event.target.id] = event.target.value;
+                    if (['nroSwitch', 'rackName', 'storeNumber'].includes(event.target.id)) {
+                        updateHostnameField(); // Only update hostname display
+                    }
+                });
+            });
+
+            // Switch type radio buttons: Update selected type and force BB-ROUTE port details.
+            // This needs to call updateUI to re-render tables with correct disabled states/descriptions.
+            document.querySelectorAll('input[name="switchType"]').forEach(radio => {
+                radio.addEventListener('change', (event) => {
+                    selectedSwitchType = event.target.value;
+
+                    // Auto-fill Nro de Switch and Rack Name based on selected switch type
+                    if (selectedSwitchType === 'BB-ROUTE-01') {
+                        params.nroSwitch = '1';
+                        params.rackName = 'R1';
+                    } else if (selectedSwitchType === 'BB-ROUTE-02') {
+                        params.nroSwitch = '2';
+                        params.rackName = 'R1';
+                    } else if (selectedSwitchType === 'SWBB') {
+                        params.nroSwitch = '1';
+                        params.rackName = 'R1';
+                    }
+                    document.getElementById('nroSwitch').value = params.nroSwitch;
+                    document.getElementById('rackName').value = params.rackName;
+
+
+                    if (selectedSwitchType.startsWith('BB-ROUTE')) {
+                        params.gi0_0_1Description = 'Conexion entre BBROUTES';
+                        params.gi0_0_2Description = 'Conexión entre BBROUTES'; // Fixed typo
+                        params.gi0_0_1IsTrunk = 'SI';
+                        params.gi0_0_1Vlan = '';
+                        params.gi0_0_2IsTrunk = 'SI';
+                        params.gi0_0_2Vlan = '';
+                    } else {
+                        if (params.gi0_0_1Description === 'Conexion entre BBROUTES') {
+                            params.gi0_0_1Description = 'Libre';
+                            params.gi0_0_1IsTrunk = 'NO';
+                            params.gi0_0_1Vlan = '10';
+                        }
+                        if (params.gi0_0_2Description === 'Conexion entre BBROUTES') {
+                            params.gi0_0_2Description = 'Libre';
+                            params.gi0_0_2IsTrunk = 'NO';
+                            params.gi0_0_2Vlan = '10';
+                        }
+                    }
+                    updateUI(); // Re-render tables and update hostname preview etc.
+                });
+            });
+            
+            // Delegated listener for VLAN IP inputs: Directly update params on input. No updateUI() here.
+            document.getElementById('vlan-table-body').addEventListener('input', (event) => {
+                if (event.target.name.startsWith('vlan') && (event.target.name.endsWith('IpAddress') || event.target.name.endsWith('VrrpIp') || event.target.name.endsWith('Mask'))) {
+                    params[event.target.name] = event.target.value;
+                }
+            });
+
+            // Delegated listener for Port table inputs: Directly update params on input. No updateUI() here.
+            document.getElementById('port-table-body').addEventListener('input', (event) => {
+                 if (event.target.name.startsWith('gi0_0_') && event.target.name.endsWith('Description')) {
+                    const portNum = parseInt(event.target.id.replace('gi0_0_','').replace('Description',''));
+                    const isForcedTrunkPort = (selectedSwitchType.startsWith('BB-ROUTE') && (portNum === 1 || portNum === 2));
+                    if (!isForcedTrunkPort) {
+                        params[event.target.name] = event.target.value;
+                    }
+                 } else if (event.target.name.startsWith('gi0_0_') && event.target.name.endsWith('Vlan')) {
+                    params[event.target.name] = event.target.value;
+                 }
+            });
+
+            // Generate Config button listener: ONLY this button triggers a full UI update and config generation.
+            document.getElementById('generateConfigBtnBottom').addEventListener('click', () => {
+                document.getElementById('generatedConfigSection').classList.remove('hidden'); // Show the section
+                updateUI();
+            });
+
+            // Download Config button listener
+            document.getElementById('downloadConfigBtn').addEventListener('click', () => {
+                const configText = document.getElementById('generatedConfig').value;
+                const hostname = params.hostname || 'huawei_config';
+                const filename = `${hostname}.cfg`;
+                const blob = new Blob([configText], { type: 'text/plain;charset=utf-8' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(a.href);
+            });
+        });
+    </script>
+</body>
+</html>
