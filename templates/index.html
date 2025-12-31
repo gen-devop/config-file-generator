@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Generador de Configuración</title>
+  </head>
+  <body>
+    <h1>Generador de Configuración</h1>
+    <form action="/generate" method="post">
+      <label for="device_type">Tipo de dispositivo:</label>
+      <select id="device_type" name="device_type" onchange="showForm()">
+        <option value="switch">Switch</option>
+        <option value="router">Router</option>
+      </select>
+
+      <div id="switch_form">
+        <h3>Parámetros para Switch</h3>
+        <label>Hostname: <input type="text" name="hostname"></label><br>
+        <label>VLAN: <input type="text" name="vlan"></label><br>
+      </div>
+
+      <div id="router_form" style="display:none;">
+        <h3>Parámetros para Router</h3>
+        <label>Hostname: <input type="text" name="hostname"></label><br>
+        <label>Interfaz: <input type="text" name="interface"></label><br>
+        <label>IP Address: <input type="text" name="ip_address"></label><br>
+      </div>
+
+      <button type="submit" name="display">Mostrar Configuración</button>
+      <button type="submit" name="download">Descargar</button>
+    </form>
+
+    <script>
+      function showForm() {
+        var type = document.getElementById('device_type').value;
+        document.getElementById('switch_form').style.display = type === 'switch' ? 'block' : 'none';
+        document.getElementById('router_form').style.display = type === 'router' ? 'block' : 'none';
+      }
+    </script>
+  </body>
+</html>
